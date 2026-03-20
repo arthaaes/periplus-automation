@@ -1,0 +1,5 @@
+com\periplus\pages\HomePage.class
+com\periplus\pages\LoginPage.class
+com\periplus\pages\ProductPage.class
+com\periplus\pages\BasePage.class
+com\periplus\pages\CartPage.class
