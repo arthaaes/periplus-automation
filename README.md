@@ -108,7 +108,17 @@ So in the code, I added a few things to make the test more stable for this situa
 As a QA engineer, I wanted the test to be a bit more time-efficient and also less likely to fail only because of the slow connection.
 
 ---
+## Obstacle During Implementation
 
+One challenge during this project was accessing the website itself.
+
+I am currently living in China, and Periplus could not be accessed in my environment without using a VPN. After trying several options, I found that the website only worked through an Indonesia server, but that server was often very slow and sometimes unstable.
+
+Because of this, the debugging process took much more time than usual. Even a small change in the code could require repeating the full test flow again under a slow or unreliable connection. Despite that, I kept iterating, adjusted the waits and handling more carefully, and continued until the automation could run successfully.
+
+I mention this as context for the implementation process and the effort needed to complete the task under a tight deadline.
+
+---
 ## Successful Test Run
 
 Below is one successful result from my local execution:
