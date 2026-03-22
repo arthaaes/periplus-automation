@@ -116,8 +116,6 @@ I am currently living in China, and Periplus could not be accessed in my environ
 
 Because of this, the debugging process took much more time than usual. Even a small change in the code could require repeating the full test flow again under a slow or unreliable connection. Despite that, I kept iterating, adjusted the waits and handling more carefully, and continued until the automation could run successfully.
 
-I mention this as context for the implementation process and the effort needed to complete the task under a tight deadline.
-
 ---
 ## Successful Test Run
 
