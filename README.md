@@ -1,40 +1,50 @@
-# Periplus Automation Testing Project
+# Periplus Shopping Cart Automation
 
-## Overview
+## Project Overview
 
-This project is my answer for **Question 5 - Scenario Option B (Part 2.2)** of the technical hometask internship application.
+This project is my answer for **Question 5, Scenario Option B, Part 2.2** from the QA internship technical hometask.
 
-The goal of this automation is to test the main shopping cart flow on the **Periplus web store** using:
+The task asks me to automate one shopping cart scenario on the **Periplus** website using:
 
-- **Java**
-- **Selenium WebDriver**
-- **TestNG**
-- **Maven**
+- Java
+- Selenium WebDriver
+- TestNG
+- Maven
 
-The automated scenario covers:
+The scenario covered in this project is:
 
-1. Open Google Chrome in a new window  
-2. Navigate to `https://www.periplus.com/`  
-3. Enter login email and password  
-4. Find one product  
-5. Add one product to the cart  
-6. Verify that the product has been successfully added to the cart  
+1. Open Google Chrome in a new window
+2. Go to `https://www.periplus.com/`
+3. Enter login email and password
+4. Find one product
+5. Add one product to the cart
+6. Verify that the product was added successfully
 
 ---
 
-## Scenario Implemented
+## What This Test Does
 
-The test automates one end-to-end shopping cart case:
+This automation performs one simple end-to-end flow:
 
-- open Periplus
-- log in with a registered test account
-- search for one book
-- open the product detail page
+- open the Periplus website
+- log in using a test account
+- search for one product
+- open the product page
 - add the product to cart
-- open cart page
-- verify the selected product is present in the cart
+- open the cart page
+- verify that the selected product is in the cart
 
-For this project, I used one fixed product in the test flow because the assignment only requires **finding one product** and verifying that it is added successfully.
+For this assignment, I used one fixed product in the test because the requirement only says to **find one product** and verify that it is added to the cart.
+
+---
+
+## Tools Used
+
+- **Java 17**
+- **Maven**
+- **Selenium WebDriver**
+- **TestNG**
+- **WebDriverManager**
 
 ---
 
@@ -60,71 +70,50 @@ periplus-automation/
 │               └── ShoppingCartTest.java
 ```
 
----
+Short explanation:
 
-## Tech Stack
+- `BaseTest` is used for browser setup and teardown
+- `BasePage` stores common Selenium helper methods
+- page classes are used to separate actions by page
+- `ShoppingCartTest` contains the main test flow
 
-- **Java 17**
-- **Maven**
-- **Selenium WebDriver**
-- **TestNG**
-- **WebDriverManager**
-
----
-
-## Design Approach
-
-I used a simple **Page Object Model (POM)** structure so the code is easier to read and maintain.
-
-- `BaseTest` handles browser setup and teardown
-- `BasePage` contains shared Selenium helper methods
-- `LoginPage`, `HomePage`, `ProductPage`, and `CartPage` represent the main pages used in the test
-- `ShoppingCartTest` contains the test scenario itself
-
-This structure helps avoid putting all Selenium steps in one file.
-
----
-
-## Prerequisites
-
-Before running the project, make sure these are installed:
-
-- Java 17
-- Maven
-- Google Chrome
-
-You can verify them with:
-
-```bash
-java -version
-mvn -version
-```
+I used this structure because it is cleaner than putting all Selenium code in one file.
 
 ---
 
 ## How to Run
 
-Open terminal inside the project folder and run:
+Make sure Java, Maven, and Google Chrome are already installed.
+
+Run this command from the project folder:
 
 ```bash
-mvn clean test
-```
-
-If you are inside the parent folder first:
-
-```bash
-cd periplus-automation
 mvn clean test
 ```
 
 ---
 
-## Test Execution Evidence
+## Notes About Slow Connection
 
-Below is one successful execution result from my local run:
+I currently live in **China**, and to access Periplus I need to use a **VPN with Indonesia server**. Because of that, the website can be very slow and sometimes inconsistent while loading.
+
+So in the code, I added a few things to make the test more stable for this situation, for example:
+
+- using waits before interacting with important elements
+- using some defensive checks for popup/overlay handling
+- keeping the flow simple and direct
+- using page load strategy adjustments to reduce unnecessary waiting time
+- adding a short fixed wait in one part of the flow when the site was still unstable in my environment
+
+As a QA engineer, I wanted the test to be a bit more time-efficient and also less likely to fail only because of the slow connection.
+
+---
+
+## Successful Test Run
+
+Below is one successful result from my local execution:
 
 ```text
-PS C:\openway\periplus-automation> cd periplus-automation
 PS C:\openway\periplus-automation\periplus-automation> mvn clean test
 [INFO] Scanning for projects...
 [INFO] 
@@ -186,35 +175,34 @@ DEBUG: Typing text into: By.cssSelector: input[name='filter_name']
 PS C:\openway\periplus-automation\periplus-automation>
 ```
 
-This output shows that the test suite ran successfully and Maven returned **BUILD SUCCESS**.
+This result shows that the project compiled successfully and the automated test passed.
 
 ---
 
-## Notes About the Current Implementation
+## Current Limitations
 
-A few notes about my current solution:
+This project is still simple and focused only on the main positive scenario required by the assignment.
 
-- this is focused on one main positive flow required by the assignment
-- the code is intentionally kept simple and readable
-- the project uses page objects to make the structure cleaner
-- some waits were added because website loading can be slow depending on network conditions
+Some limitations of the current version:
 
-In my case, access can be slower because I am currently living in China and sometimes need to use a VPN route through Indonesia to access the website. Because of that, I tried to make the test stable enough for a slow-loading environment.
-
----
-
-## Possible Future Improvements
-
-If this project were continued, some possible improvements would be:
-
-- move login data to environment variables or config file
-- improve cart verification using more specific UI elements
-- add more negative and edge test cases
-- add reporting and screenshots on failure
-- improve driver/browser version handling if needed
+- only one main cart scenario is automated
+- test data is still simple and fixed
+- verification can still be improved to be more specific
+- the code was written with learning purpose, since this is my first time using Java
 
 ---
 
-## Author Note
+## Possible Improvements
 
-This project was created as part of a QA internship technical task. Since this is my first time learning Java, I tried to keep the solution practical, readable, and aligned with the assignment requirements while still using a proper automation test structure.
+If I continue this project later, I would improve these parts:
+
+- move login data into config or environment variables
+- add more cart test cases, including negative cases
+- make cart verification more specific
+- add screenshots or reports for failed tests
+
+---
+
+## Personal Note
+
+This is my first time learning Java, so in this project I tried to make the solution work correctly while also keeping the structure understandable. I used a simple Page Object Model approach because it helped me organize the code better and made the test flow easier to read.
