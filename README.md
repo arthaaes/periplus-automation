@@ -179,19 +179,6 @@ This result shows that the project compiled successfully and the automated test 
 
 ---
 
-## Current Limitations
-
-This project is still simple and focused only on the main positive scenario required by the assignment.
-
-Some limitations of the current version:
-
-- only one main cart scenario is automated
-- test data is still simple and fixed
-- verification can still be improved to be more specific
-- the code was written with learning purpose, since this is my first time using Java
-
----
-
 ## Possible Improvements
 
 If I continue this project later, I would improve these parts:
