@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Periplus Shopping Cart Suite">
+    <!-- This suite groups the shopping cart automation for scenario 2.2. -->
     <test name="Cart Functionality Tests">
         <classes>
+            <!-- Run the main end-to-end test for login, search, add to cart, and verification. -->
             <class name="com.periplus.tests.ShoppingCartTest"/>
         </classes>
     </test>

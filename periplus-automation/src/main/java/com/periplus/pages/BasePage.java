@@ -13,13 +13,20 @@ public class BasePage {
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
+
+        // I use one shared explicit wait in the base page so all child pages can reuse it.
+        // I intentionally made it longer because the target website is slower from my location 
+        // (In China, I need to use VPN with "Indonesia" server to be able to access Periplus,
+        // and it's extremely slow).
         this.wait = new WebDriverWait(driver, Duration.ofMinutes(1));
     }
 
     public void closePopupsIfPresent() {
         try {
-            // FIX: Temporarily turn off the 15-second implicit wait.
-            // This makes the popup check instant so it doesn't freeze your login!
+            // Here I temporarily turn off implicit wait.
+            // My reason is: if no popup exists, I do not want Selenium to waste extra waiting time searching for it.
+            // Since I am in China and need an Indonesia VPN to access Periplus, every unnecessary wait feels longer,
+            // so I tried to make these helper steps more time-efficient.
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
             
             By closeButton = By.cssSelector(".p-close, .close-button, #popup-close");
@@ -30,7 +37,7 @@ public class BasePage {
         } catch (Exception e) {
             System.out.println("DEBUG: No popup found or couldn't close it.");
         } finally {
-            // Turn the 15-second wait back on for the rest of the test
+            // Restore the default implicit wait for normal test steps.
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         }
     }
@@ -38,31 +45,37 @@ public class BasePage {
     // A helper method to wait for the annoying loading screen to disappear
     protected void waitForPreloader() {
         try {
-            // Temporarily turn off implicit wait here too, to prevent delays if preloader isn't there
+            // Same idea here: I disable implicit wait first so the code does not get delayed
+            // when the preloader is already gone.
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+            
+            // This helper is useful because the site sometimes shows a loading layer before elements are clickable.
             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".preloader")));
         } catch (Exception e) {
-            // Ignore if it's already gone
+            // If preloader does not exist or is already invisible, I simply continue.
         } finally {
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         }
     }
 
     protected void click(By locator) {
+        // Before clicking, I wait for loading overlay to disappear.
         waitForPreloader();
+
+        // Then I wait until the target element is actually clickable.
         wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 
     protected void writeText(By locator, String text) {
         System.out.println("DEBUG: Waiting for visibility of: " + locator.toString());
         
-        // 1. Wait for the loading screen to vanish
+        // First make sure the page is not still covered by loading animation.
         waitForPreloader();
     
-        // 2. Wait for the text box to be visible
+        // Then wait until the field is visible.
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     
-        // 3. Clear and type
+        // I clear first so old text does not stay in the field.
         element.clear();
         System.out.println("DEBUG: Typing text into: " + locator.toString());
         element.sendKeys(text);

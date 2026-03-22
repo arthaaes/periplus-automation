@@ -8,32 +8,38 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <!-- I use Java 17 here because it is modern and works well with Selenium/TestNG in this project. -->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- This lets me keep the TestNG suite file configurable from one place. -->
         <suiteXmlFile>testng.xml</suiteXmlFile>
     </properties>
 
     <dependencies>
         <dependency>
+            <!-- Main Selenium library for browser automation. -->
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>4.25.0</version>
         </dependency>
 
         <dependency>
+            <!-- TestNG is used to organize and run the test case. -->
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.9.0</version>
             <scope>test</scope>
         </dependency>
 
+        <!-- WebDriverManager saves me from setting ChromeDriver manually. -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>5.7.0</version>
         </dependency>
 
+        <!-- Simple logger so test output is easier to read during execution. -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
@@ -45,6 +51,7 @@
     <build>
         <plugins>
             <plugin>
+                <!-- Standard Maven compiler plugin for Java project build. -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
@@ -56,12 +63,16 @@
             </plugin>
 
             <plugin>
+                <!-- Surefire is the plugin that actually runs the TestNG suite through Maven. -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
+                    <!-- I keep forkCount as 0 here for simplicity during local execution. -->
                     <forkCount>0</forkCount>
                     <reuseForks>true</reuseForks>
+
+                    <!-- Point Maven to the suite file that contains my test class list. -->
                     <suiteXmlFiles>
                         <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
